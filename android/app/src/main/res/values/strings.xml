@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tawi Spaces</string>
+    <string name="title_activity_main">Tawi Spaces</string>
+    <string name="package_name">com.tawihealth.spaces</string>
+    <string name="custom_url_scheme">com.tawihealth.spaces</string>
+</resources>

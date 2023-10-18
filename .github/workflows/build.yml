@@ -1,0 +1,57 @@
+name: Debug Build
+
+on:
+  push:
+    branches:
+      - 'main'    
+
+jobs:
+  build_android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - name: Caching Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/android/.gradle/caches
+            ~/android/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Cache web node modules
+        uses: actions/cache@master
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      - name: Build Client
+        env:
+          GIT_RUN_ID: ${{ github.run_id }}
+          GIT_RUN_NUMBER: ${{ github.run_number	 }}
+        run: |
+          npm run build 
+          npm run build-capacitor-android
+          cd android && ./gradlew assembleDebug && cd ..
+      - name: Upload Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: app-release
+          path: |
+            android/app/build/outputs/bundle/release/
+            android/app/build/outputs/apk/debug/*.apk
+          retention-days: 5

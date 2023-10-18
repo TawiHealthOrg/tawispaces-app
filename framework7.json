@@ -1,0 +1,25 @@
+{
+  "cwd": "/Users/thebeachmaster/git/tawihealth/tawiahspaces",
+  "type": [
+    "capacitor"
+  ],
+  "name": "Tawi Spaces",
+  "framework": "svelte",
+  "template": "split-view",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": true,
+    "color": "#007aff",
+    "darkMode": true,
+    "iconFonts": true
+  },
+  "customBuild": false,
+  "pkg": "com.tawihealth.spaces",
+  "capacitor": {
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  }
+}
