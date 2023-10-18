@@ -44,6 +44,7 @@ jobs:
           GIT_RUN_ID: ${{ github.run_id }}
           GIT_RUN_NUMBER: ${{ github.run_number	 }}
         run: |
+          npm install
           npm run build 
           npm run build-capacitor-android
           cd android && ./gradlew assembleDebug && cd ..
